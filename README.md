@@ -1,4 +1,4 @@
-# JS / TS
+# 5. JS / TS
 
 # 1. JavaScript
 
@@ -16,6 +16,7 @@
 - 개발자들이 만든 다양한 기능(패키지, 모듈)들을 관리
 - npm install XXX -D → 개발용 의존성 패키지 (개발할 때만 필요함을 의미)
 - npm install XXX → 일반 의존성 설치 (실제 웹에서 필요할 수 있음을 의미)
+    - npm init -y → json 파일 생성
 
 ### 3. Parcel Bundler
 
@@ -42,6 +43,8 @@
 
 ## ■ 데이터 타입
 
+- 참조형 데이터 ↔ 원시형 데이터
+    - 객체, 배열, 함수
 - String, Number, Boolean, Undefined, Null
     - 코드
 
@@ -80,6 +83,177 @@
           // }
         };
         ```
+
+ 1. 문자
+
+- 코드
+
+    ```jsx
+    // 1. indexOf
+    const string = "Hi I'm Park"
+    const lastName = "Park" //-> if not return -1
+    console.log(string.indexOf(lastName))
+    // in python
+    // string_ = "Hi I'm Park"
+    // lastName = "Park"
+    // print(string_.index(lastName)), 여러 자료형
+    // print(string_.find(lastName)), 문자열만
+
+    // 2. length
+    let str = '0123'
+    console.log(str.length)
+
+    // 3. slice
+    console.log(str.slice(0,3))
+    // str[0:3]
+
+    // 4. replace
+    console.log(str.replace('012', '4567'))
+
+    // 5. match
+    str = 'thesecon@gmail.com'
+    console.log(str.match(/.+(?=@)/))
+
+    // 6. trim
+    str = '   sdfdsfdf s '
+    console.log(str.trim())
+    ```
+
+2. 숫자
+
+- 코드
+
+    ```jsx
+    // JS 숫자
+    const pi = 3.141592
+    console.log(typeof pi.toFixed(2))
+    console.log(parseInt(pi))
+    console.log(parseFloat(pi))
+    // s = 3.141592
+    // s1 = '{:.2f}'.format(s)
+    // s2 = round(s, 2)
+
+    // 1. Math.abs()
+    // 2. Math.min(), Math.max()
+    // 3. Math.ceil(), Math.floor()
+    // 4. Math.round(), Math.random()
+    ```
+
+3. 배열
+
+- 코드
+
+    ```jsx
+    // JS 배열(Array)
+    // 1. find
+    a = [1,2,3,4,7,13,15];
+    console.log(a.indexOf(7))
+    console.log(a.find(element => element > 10));
+    // 조건을 만족하는 첫번째 요소 반환
+
+    // 2 -> .contcat()
+    const b = ['apple', 'banana']
+    console.log(a.concat(b))
+    // -> 원본 수정 안 됨
+
+    // 3 -> .foreach()
+    b.forEach(function (element, index, array) {
+      console.log(element, index, array)
+    })
+    // b.forEach((element, index, array) => {
+    //   console.log(element, index, array)
+    // })
+
+    // 4 -> .map()
+    const c = b.map(function (element, index) {
+      // return `${element}, ${index}`
+      return {
+        id: index,
+        name: element
+      }
+    })
+    console.log(c);
+    // map(func, Object) in python
+
+    // 5 -> .filter()
+    let numbers = [1,2,3,4]
+    let fruits = ['Apple', 'Banana']
+    // const s1 = numbers.map(number => {
+    //   return number < 3
+    // })
+    const s2 = numbers.filter(number => number < 3
+    )
+    console.log(s2)
+
+    // => map과 filter는 원본에 영향 X
+
+    // 6 -> .find()   .findIndex()
+    const t1 = fruits.find(fruit => {
+      return /^B/.test(fruit)
+    })
+    // fruit 요소가 하나씩 들어가서 .test() 함수로
+    // true가 반환되는 요소(Banana)를 리턴
+
+    const t2 = fruits.findIndex( fruit => /^B/.test(fruit) )
+    // true가 반환되는 idx를 리턴
+
+    // 7 -> .inclues()
+    const d1 = fruits.includes('Banana')
+    console.log(d1)
+
+    // 8 -> .push() .unshift()
+    // 원본 수정됨 !
+    numbers = [1,2,3,4]
+    fruits = ['Apple', 'Banana']
+
+    numbers.push(5)
+    numbers.unshift(2)
+    console.log(numbers)
+
+    // 9 -> .reverse()
+    // 원본 수정됨 !
+    console.log(numbers.reverse())
+    console.log(numbers)
+
+    // 10 -> .splice(2, 1, 99)
+    // 원본 수정됨 !
+    console.log(numbers.splice(2, 1, 99)) // return 3
+    // (idx, n) -> idx부터 n번째까지 숫자 삭제 및 반환
+    // del numbers[2:3] in python
+    // numbers.insert(2, 99) in python
+    console.log(numbers)
+    ```
+
+4. 객체
+
+- 코드
+
+    ```jsx
+    // JS Object
+    // Static Method : Parameters를 필요치 않음
+    // 특정 인스턴스와 연결 돼 있지 않음
+
+    let target = { a: 1, b: 2}
+    let source = { b: 4, c: 5}
+
+    // 1. assign(a,b) b를 a에 병합하고 a를 반환
+    let returnedTarget = Object.assign(target, source)
+
+    console.log(target == returnedTarget)
+
+    const a1 = {k:123}
+    const a2 = {k:123}
+    console.log(a1===a2)
+    // console.log(a1==a2) -> false -> why?
+
+    // 2. assign({}, a, b) a, b를 합쳐 새로운 객체 생성
+
+    // 3. keys
+    console.log(Object.keys(target))
+    let values = Object.keys(target).map(key => target[key])
+    console.log(values)
+    // values 리턴
+    ```
 
 ## ■ 데이터 타입 확인
 
@@ -171,6 +345,8 @@
       name: 'heropy'
     })
     // Object 데이터 생성
+    // 중괄호가 겹치므로 객체를 반환하고 싶을 땐
+    // 바깥을 소괄호로 감쌈
     ```
 
 - IIFE
@@ -368,7 +544,9 @@
     }
     User.prototype.getFullName = function () {
         return `${this.firstName} ${this.lastName}`
-    }
+    } 
+    // => 프로토 타입을 통해 만들어지는 생성자는 메모리에 한번만 저장되고 
+    // new라는 생성자를 통해 언제든지 사용할 수 있음
     const heropy2 = new User('Heropy', 'Park')
     const amy= new User('Amy', 'Park')
     const neo = new User('Neo', 'Park')
@@ -380,7 +558,7 @@
     ```jsx
     // this
     // 일반 함수는 호출 위치에 따라 this 정의
-    // 화살 함수는 자신이 선언된 함수 범위에서 this 정의
+    // 화살표 함수는 자신이 선언된 함수 범위에서 this 정의
 
     const heropy = {
       name: 'heropy',
@@ -431,7 +609,6 @@
     timer.timeout___()
     ```
 
-    - 
 - ES6 Classes
 
     ```jsx
@@ -478,6 +655,250 @@
     const myCar = new Car('운송수단', 2, '2종')
     console.log(myCar)
     ```
+
+## ■ 기타 문법
+
+1. 구조 분해 할당
+    - 코드
+
+        ```jsx
+        // 4. 구조 분해 할당 (Destructuring assignment)
+        //    =비구조화 할당
+
+        let user = {
+          name: 'Heropy',
+          age: 85,
+          email: 'thesecon@gmail.com'
+        }
+
+        const {name:heropy, age, email, address = 'Korea '} = user
+        // name의 value 값을 heropy 변수에 저장, address의 기본값 = 'korea'
+        console.log(heropy, age, email, address)
+
+        user = ['Heropy', 85, 'thesecon@gmail.com']
+        const [,b2,b3,b4 = 'Korea'] = user
+        console.log(b2,b3,b4)
+        ```
+
+2. 전개 연산자
+    - 코드
+
+        ```jsx
+        // 전개 연산자 (Spread)
+        let fruits = ['Apple', 'Banana']
+        // console.log(...fruits)
+        // a = [1,2,3] -> print(*a) in python
+        // *args ≒ ...args <- rest parameters
+
+        function toObject(a, b) {
+          return {
+            a: a,
+            b // <- argument와 변수의 이름이 같아 축약형 가능
+          }
+        }
+        // console.log(toObject(...fruits))
+        ```
+
+## ■ 데이터 불변성
+
+- 원시 데이터 : String / Number / Boolean / undefined / null
+    - Value가 일치하면 같은 데이터
+- 참조형 데이터 : Object / Array / Function
+
+    ```jsx
+    // 데이터 불변성(Immutability)
+    // 참조형 데이터
+
+    let a = { k: 1 }
+    let b = { k: 1 }
+    // console.log(a, b, a === b)
+    a.k = 7
+    b = a
+    // console.log(a, b, a === b)
+    a.k = 2
+    // console.log(a, b, a === b)
+    let c = b
+    // console.log(a, b, c, a === c)
+    a.k = 9
+    // console.log(a, b, c, a === c)
+    ```
+
+## ■ 얕은복사 / 깊은복사
+
+```jsx
+import _ from 'lodash'
+
+let user = {
+  name: 'Heropy',
+  age: 85,
+  email: ['tehsecon@gmail.com']
+}
+// 참조 데이터 변수 할당
+let copyUser = user
+// console.log(copyUser === user)
+
+// 얕은 복사(1)
+copyUser = Object.assign({}, user)
+// console.log(copyUser === user)
+
+// 얕은 복사(2)
+copyUser = {...user}
+// console.log(copyUser === user)
+user.email.push('neo@zillinks.com')
+// console.log(copyUser)
+// 안에 있는 참조 데이터의 주소값은 변하지 않음
+
+// 깊은 복사
+copyUser = _.cloneDeep(user)
+user.email.push('jkrang104@gmail.com')
+// console.log(copyUser, user)
+```
+
+## ■ 가져오기 / 내보내기
+
+- 내보내기
+    1. Default export
+    2. Named export
+- 코드
+
+    ```jsx
+    import { printHi, tmp as heropy } from './printHi'
+    // 여러개 꺼내올 수 있음, alias 가능
+    // import * as R from './printHi'
+
+    export default function () {
+      console.log('hi')
+    } // default 함수 내보내기 import 함수이름 from '경로'
+      // 하나의 내보내기만 할 수 있음 (Named Export는 상관 없음)
+
+    // printHi()
+    console.log(heropy)
+    ```
+
+## ■ Lodash
+
+- 코드
+
+    ```jsx
+    import _ from 'lodash'
+
+    // 1. 고유화
+    let userA = [ 
+      { userId: '1', name: 'HEROPY'},
+      { userId: '2', name: 'Neo'}
+    ]
+
+    let userB = [ 
+      { userId: '1', name: 'HEROPY'},
+      { userId: '3', name: 'Amy'}
+    ]
+
+    let userC = userA.concat(userB)
+    // console.log(userC)
+    // console.log(_.uniqBy(userC, 'userId'))
+    // -> 하나의 배열 데이터에서 고유화
+    let userD = _.unionBy(userA, userB, 'userId')
+    // console.log(userD)
+    // -> 여러개의 배열 데이터에서 합친 뒤 고유화
+
+    // 2. find / findIndex / remove 
+    let users = [
+      { userId: '1', name: 'HEROPY' },
+      { userId: '2', name: 'Neo' },
+      { userId: '3', name: 'Amy' },
+      { userId: '4', name: 'Evan' },
+      { userId: '5', name: 'Lewis' }
+    ]
+
+    let foundUser = _.find(users, { name: 'Amy' })
+    // console.log(foundUser)
+    let foundUserIndex = _.findIndex(users, { name: 'Amy'})
+    // console.log(foundUserIndex)
+
+    _.remove(users, { name: 'HEROPY' })
+    ```
+
+## ■ JSON
+
+- JavaScript Object Notation
+- "키-값 쌍"으로 이루어진 데이터 오브젝트를 전달하기 위한 개방형 표준 포맷
+- 비동기 브라우저/서버 통신(AJAX)을 위해 (XML 대체)
+    - 큰 따옴표만 사용 → 키를 따옴표로 묶어줘야 함
+    - undefined를 제외한 데이터 타입 사용 可
+- 코드
+
+    ```jsx
+    // JSON 파일 불러오기
+    import myData from './myData.json'
+
+    // console.log(myData)
+
+    // JSON 파일로 만들기
+    const user = {
+      name: 'HEROPY',
+      age: 85,
+      eamils: [
+        'thesecon@gmail.com',
+        'neo@zillinks.com'
+      ]
+    }
+
+    const str = JSON.stringify(user)
+    // console.log(typeof str)
+    const obj = JSON.parse(str)
+    // console.log(typeof obj)
+    ```
+
+- OMDb API 예제 cf. omdbapi.com
+    - 코드
+
+        ```jsx
+        import axios from 'axios'
+
+        function fetchMovies() {
+          axios
+          .get('https://www.omdbapi.com/?apikey=7035c60c&s=frozen')
+          .then(res => {
+            const h1El = document.querySelector('h1')
+            const imgEl = document.querySelector('img')
+            h1El.textContent = res.data.Search[0].Title
+            imgEl.src = res.data.Search[0].Poster
+          })
+        }
+
+        fetchMovies()
+        ```
+
+## ■ Storage
+
+1. localStorage → 반영구적
+    - 코드
+
+        ```jsx
+        // localStorage.setItem('myCat', 'Tom')
+        // -> 문자 데이터 형태로 set
+
+        // let cat = localStorage.getItem('myCat')
+        // 데이터 읽어오기
+        // localStorage.removeItem('myCat')
+
+        // -------------------------------------------
+        const user = {
+          name: 'HEROPY',
+          age: 85,
+          eamils: [
+            'thesecon@gmail.com',
+            'neo@zillinks.com'
+          ]
+        }
+
+        // localStorage.setItem('user', JSON.stringify(user))
+        const obj = JSON.parse(localStorage.getItem('user'))
+        obj.age = 22
+        localStorage.setItem('user', JSON.stringify(obj))
+        ```
+
+2. sessionStorage → 페이지를 닫을 때 데이터 사라짐
 
 ## ■ DOM API
 
@@ -530,3 +951,95 @@
     console.log(a);
     console.log(b);
     ```
+
+## ■ 정규표현식 (Regular Expression, Regex)
+
+- 문자 검색 (search)
+- 문자 대체 (replace)
+- 문자 추출 (extract)
+- 메소드
+    - test → 일치 여부 반환
+    - match → 일치하는 문자열 반환
+    - search → 일치하는 문자열의 인덱스 반환
+    - replace → 대체된 문자열 반환
+- 플래그
+    - g → 모든 문자 일치 (global)
+    - i → 영어 대소문자 구분 않고 일치 (ignore case)
+    - m → 여러 줄 일치 (multi line) → 멀티라인에 대해 검색
+- 패턴
+    - ^ab → 줄 시작에 있는 ab와 일치
+    - ab& → 줄 끝에 있는 ab와 일치
+    - `\.` → 임의의 한 문자와 일치
+    - a|b → a 또는 b와 일치
+    - ab? → b가 없거나 b와 일치
+    - {3} → 3개 연속 일치
+    - {3,} → 3개 이상 연속 일치
+    - {3,5} → 3개 이상 5개 이하 연속 일치
+    - [abc] → a 도는 b 또는 c
+    - [a-z] / [A-Z] / [0-9] / [가-힣]
+    - \w → 대소영문 + 숫자 + _ ← 63개
+    - \b → `~\w` 문자경계
+    - \d → 숫자
+    - \s → 공백에 일치
+    - (?=) → 앞 쪽 일치 부분 검색
+    - (?≤) → 뒤 쪽 일치 부분 검색
+
+```jsx
+// 생성자 함수 방식
+// new RegExp("표현", "옵션")
+let regexp1 = new RegExp("^abc")
+let regexp2 = new RegExp("^abc", "gi")
+
+// 리터럴 방식
+// /표현/옵션
+regexp1 = /^abc/
+regexp2 = /^abc/gi
+// gi -> 일치하는 모든 문자 g & 대소문자 구분 안 함 i
+// python에서는 re.findall과 re.search를 씀
+let str = `
+010-1234-5678
+thesecon@gmail.com
+https://www.omdbapi.com/?apikey=7035c60c&s=frozen
+The quick brown fox jumps over the lazy dog.
+abbcccdddd
+`
+
+// let regxp = new RegExp('the', 'gi')
+let regxp = /the/gi
+// console.log(str.match(regxp))
+
+regxp = /fox/gi
+// console.log(regxp.test(str))
+// console.log(str.replace(regxp, 'AAA'))
+// test, replace method
+
+// 플래그
+regexp = /\.$/gim
+// console.log(str.match(regexp))
+
+// 패턴(표현)
+regexp = /^t/gm
+// console.log(str.match(regexp))
+
+regexp = /https?/g
+// console.log(str.match(regexp))
+
+// console.log(str.match(/\b\w{2,3}\b/g))
+// \w -> 숫자를 포함 영어 알파벳
+// \b \w \b ~(숫자를 포함 영어 알파벳) 경계 안의 단어
+
+// console.log(
+//   str.match(/\bf\w{1,}\b/g)
+// )
+// 소문자 f로 시작하는 모든 영단어
+
+// console.log(
+//   str.match(/.{1,}(?=@)/g)
+// )
+// 앞 쪽 일치
+
+console.log(
+  str.match(/(?<=@).{1,}/g)
+)
+// 뒷 쪽 일치
+```
