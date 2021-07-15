@@ -24,8 +24,3 @@ console.log(values)
 // values 리턴
 
 // 4. 
-// target = [1,2]
-let ee = [1,2,3]
-target.forEach(function (element) {
-  console.log(element)
-})
