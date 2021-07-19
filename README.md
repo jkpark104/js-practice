@@ -1,4 +1,4 @@
-# 5. JS / TS
+# JS / TS
 
 # 1. JavaScript
 
@@ -253,6 +253,14 @@
     let values = Object.keys(target).map(key => target[key])
     console.log(values)
     // values 리턴
+
+    // cf. --->
+    const a = [1,2,3,4]
+
+    const o1 = Object.entries(a)
+    const o2 = Object.values(a)
+    const o3 = Object.keys(a)
+    console.log(o1, o2)
     ```
 
 ## ■ 데이터 타입 확인
@@ -560,7 +568,7 @@
     console.log(heropy2.getFullName())
     ```
 
-- this
+- this (1)
 
     ```jsx
     // this
@@ -614,6 +622,29 @@
     timer.timeout_()
     timer.timeout__()
     timer.timeout___()
+    ```
+
+- this (2)
+
+    ```jsx
+    const cat = {
+      name : '야옹이',
+      1: 'hi',
+      say: () => {
+        console.log(this.name)
+      // say() {
+      //   console.log(this.name)
+      // }
+    	// 화살표와 일반함수일 때 차이점
+      }
+    }
+
+    const dog = {
+      name : '멍멍이'
+    }
+    dog.say = cat.say
+    cat.say()
+    dog.say()
     ```
 
 - ES6 Classes
@@ -767,6 +798,40 @@ copyUser = _.cloneDeep(user)
 user.email.push('jkrang104@gmail.com')
 // console.log(copyUser, user)
 ```
+
+## ■ Getter / Setter
+
+- 코드
+
+    ```jsx
+    // 1. GETTER
+    const a = {
+    n1 : 1,
+    n2 : 2,
+    get cc() {
+        return a.n1 + a.n2
+      }
+    }
+
+    a.n2 = 3
+
+    // console.log(a.cc)
+    // 특정 값을 조회하려 할 때 (호출 X)
+
+    // 2. SETTER
+    const dog = {
+      _name : '멍멍이',
+      set name(value) {
+        // parameters 설정해줘야 함
+        this._name = value
+      }
+    }
+
+    dog.name = '뭉뭉이'
+    // = 함수일 때 dog.name(뭉뭉이)
+
+    console.log(dog._name)
+    ```
 
 ## ■ 가져오기 / 내보내기
 
