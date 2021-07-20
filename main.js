@@ -1,7 +1,21 @@
-// cf. --->
-const a = [1,2,3,4]
+function Animal(type, name, sound) {
+  this.type = type
+  this.name = name
+  this.sound = sound
+}
 
-const o1 = Object.entries(a)
-const o2 = Object.values(a)
-const o3 = Object.keys(a)
-console.log(o1, o2)
+Animal.prototype.say = function() {
+  console.log(this.sound)
+}
+
+function Dog(name, sound) {
+  Animal.call(this, '개', name, sound)
+}
+
+function Cat(name, sound) {
+  Animal.call(this, '고양이', name, sound)
+}
+
+Dog.prototype = Animal.prototype
+Cat.prototype = Animal.prototype
+

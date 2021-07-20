@@ -222,6 +222,34 @@
     // del numbers[2:3] in python
     // numbers.insert(2, 99) in python
     console.log(numbers)
+
+    // 11 -> .join() 
+    // 문자열로 만듦
+    const array = [1,2,3,4,5]
+
+    console.log(array.join(' '))
+    // print(''.join(a))
+
+    // 12 -> .reduce((acc,current,idx,array),init value)
+    // init value 설정 안하면 배열의 0번째 인수가 init value로 들어감
+    const a = [1,2,3,4]
+    // console.log(a.reduce((acc,val) => {
+    //   console.log(acc, val)
+    //   return acc+val
+    // }))
+
+    const alpha = ['a', 'b', 'c', 'd', 'e']
+
+    const counts = alpha.reduce((acc, cur) => {
+      if (acc[cur]) {
+        acc[cur] +=1
+      } else {
+        acc[cur] = 1
+      }
+      return acc
+    }, {})
+
+    // console.log(counts)
     ```
 
 4. 객체
@@ -562,68 +590,39 @@
     } 
     // => 프로토 타입을 통해 만들어지는 생성자는 메모리에 한번만 저장되고 
     // new라는 생성자를 통해 언제든지 사용할 수 있음
+    // 객체가 생성될 때 같은 참조 주소값을 넣어 주는 것 같음
     const heropy2 = new User('Heropy', 'Park')
     const amy= new User('Amy', 'Park')
     const neo = new User('Neo', 'Park')
     console.log(heropy2.getFullName())
     ```
 
-- this (1)
+- 상속
 
     ```jsx
-    // this
-    // 일반 함수는 호출 위치에 따라 this 정의
-    // 화살표 함수는 자신이 선언된 함수 범위에서 this 정의
-
-    const heropy = {
-      name: 'heropy',
-      normal: function() { //normal 메소드가 호출돼 이 위치에서 this 정의
-        console.log(this.name)
-      },
-      arrow: () => {
-        console.log(this.name) // arrow 메소드가 선언된 함수 범위에서 this 정의
-      }
+    function Animal(type, name, sound) {
+      this.type = type
+      this.name = name
+      this.sound = sound
     }
-    heropy.normal() 
-    heropy.arrow()
 
-    const amy = {
-      name: 'Amy',
-      normal: heropy.normal,
-      arrow: heropy.arrow
+    Animal.prototype.say = function() {
+      console.log(this.sound)
     }
-    amy.normal()
-    amy.arrow()
 
-    const timer = {
-      name: 'Heropy!!',
-      timeout: function () {
-        setTimeout(function () {
-          console.log(this.name) // 이 위치에서 this 정의
-        }, 1000)
-      },
-      timeout_: function () {
-        setTimeout(() => {
-          console.log(this.name)
-        }, 1000)
-      },
-      timeout__: () => {
-        setTimeout(() => {
-          console.log(this.name)
-        }, 1000)
-      },
-      timeout___: () => {
-        setTimeout(function () {
-          console.log(this.name)
-        }, 1000)
-      }
+    function Dog(name, sound) {
+      Animal.call(this, '개', name, sound)
     }
-    timer.timeout()
-    timer.timeout_()
-    timer.timeout__()
-    timer.timeout___()
+
+    function Cat(name, sound) {
+      Animal.call(this, '고양이', name, sound)
+    }
+
+    Dog.prototype = Animal.prototype
+    Cat.prototype = Animal.prototype
     ```
 
+- this (1)
 - this (2)
 
     ```jsx
@@ -659,6 +658,7 @@
       getFullName() {
         return `${this.firstName} ${this.lastName}`
       }
+    	// 자동으로 프로토타입으로 설정됨
     }
     const heropy2 = new User('Heropy', 'Park')
     const amy = new User('Amy', 'Park')
