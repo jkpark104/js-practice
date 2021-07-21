@@ -1,4 +1,4 @@
-# JS / TS
+# 5. JS / TS
 
 # 1. JavaScript
 
@@ -413,7 +413,7 @@
     }()); // <- 소괄호 안
     ```
 
-- 호이스팅
+- 호이스팅 (hoisting)
 
     ```jsx
     // 호이스팅
@@ -532,7 +532,7 @@
     }
     ```
 
-## ■ 유효범위
+## ■ 유효범위 (Scope)
 
 - 코드
 
@@ -555,6 +555,30 @@
     // print(a) works in python
 
     scope()
+
+    //----------------------
+    const value = 'hello'
+    // global scope
+
+    function myFunc() {
+      console.log(value)
+    }
+
+    function otherFunc()  {
+      const value = 'bye'
+      // function scope
+      console.log(value)
+      if (true) {
+        const value = 'nono'
+        // block scope
+        console.log(value)
+      }
+    }
+
+    myFunc()
+    otherFunc()
+
+    console.log(value)
     ```
 
 ## ■ 클래스
@@ -623,6 +647,61 @@
     ```
 
 - this (1)
+
+    ```jsx
+    // this
+    // 일반 함수는 호출 위치에 따라 this 정의
+    // 화살표 함수는 자신이 선언된 함수 범위에서 this 정의
+
+    const heropy = {
+      name: 'heropy',
+      normal: function() { //normal 메소드가 호출돼 이 위치에서 this 정의
+        console.log(this.name)
+      },
+      arrow: () => {
+        console.log(this.name) // arrow 메소드가 선언된 함수 범위에서 this 정의
+      }
+    }
+    heropy.normal() 
+    heropy.arrow()
+
+    const amy = {
+      name: 'Amy',
+      normal: heropy.normal,
+      arrow: heropy.arrow
+    }
+    amy.normal()
+    amy.arrow()
+
+    const timer = {
+      name: 'Heropy!!',
+      timeout: function () {
+        setTimeout(function () {
+          console.log(this.name) // 이 위치에서 this 정의
+        }, 1000)
+      },
+      timeout_: function () {
+        setTimeout(() => {
+          console.log(this.name)
+        }, 1000)
+      },
+      timeout__: () => {
+        setTimeout(() => {
+          console.log(this.name)
+        }, 1000)
+      },
+      timeout___: () => {
+        setTimeout(function () {
+          console.log(this.name)
+        }, 1000)
+      }
+    }
+    timer.timeout()
+    timer.timeout_()
+    timer.timeout__()
+    timer.timeout___()
+    ```
+
 - this (2)
 
     ```jsx
@@ -716,6 +795,30 @@
         user = ['Heropy', 85, 'thesecon@gmail.com']
         const [,b2,b3,b4 = 'Korea'] = user
         console.log(b2,b3,b4)
+
+        // 4-1. 비구조화 할당 예시
+        const deepObject = {
+          state: {
+            information: {
+              name: 'velopert',
+              languages: ['korean', 'english']
+            }
+          },
+          value: 5
+        }
+
+        const {
+          state: {
+            information: {
+              name,languages: [,firstLang]
+            }
+          },
+          value
+        } = deepObject
+
+        console.log(name)
+        // console.log(languages)
+        console.log(firstLang)
         ```
 
 2. 전개 연산자
@@ -735,6 +838,32 @@
           }
         }
         // console.log(toObject(...fruits))
+
+        //2-1. 전개 연산자 예시
+        const slime = {
+          name: '슬라임'
+        }
+
+        const cuteSlime = {
+          ...slime,
+          attribute: 'cute'
+        }
+
+        const slime_copy = slime
+        // console.log(slime)
+        // console.log(cuteSlime === slime)
+        // console.log(slime === slime_copy)
+
+        //2-2. 전개 연산자 예시 -> Rest
+
+        const a = [ 1,2,3,4,5,6]
+
+        const [b, ...c] = a
+        // rest는 가장 뒤에 나와야 함
+        // 파이썬은 순서 적용됨
+
+        // console.log(b)
+        // console.log(c)
         ```
 
 3. Template Literal
@@ -831,6 +960,31 @@ user.email.push('jkrang104@gmail.com')
     // = 함수일 때 dog.name(뭉뭉이)
 
     console.log(dog._name)
+    ```
+
+## ■ 단축 평가 논리 계산법
+
+- 코드
+
+    ```jsx
+    const dog = {
+      name: '멍멍이'
+    }
+
+    function getName(animal) {
+      return animal && animal.name
+      // animal과 annimal.name이 truthy한 객체인지 확인
+    }
+
+    // console.log(getName(dog))
+
+    console.log(true && 'hello') // => 'hello'
+    console.log('hello' && true) // => true
+    console.log('hello' && 'bye') // => 'bye'
+    console.log('hello' || false) // => 'hello'
+    console.log('gone' || 'hihi') // => 'gone'
+    console.log(true || 'hihi') // => true
+    console.log(false || 'hihi') // => 'hihi'
     ```
 
 ## ■ 가져오기 / 내보내기
